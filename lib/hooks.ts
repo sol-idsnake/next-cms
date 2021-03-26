@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import Router from 'next/router'
 import useSWR from 'swr'
+import { User } from '../node_modules/.prisma/client'
 
 const fetcher = (url) =>
   fetch(url)
@@ -9,8 +10,11 @@ const fetcher = (url) =>
       return { user: data?.user || null }
     })
 
-export const useUser = ({ redirectTo, redirectIfFound } = {}) => {
-  const { data, error } = useSWR('/api/user', fetcher)
+export const useUser = ({
+  redirectTo,
+  redirectIfFound,
+}: { redirectTo?: string; redirectIfFound?: boolean } = {}): null | User => {
+  const { data, error } = useSWR('/api/user/user', fetcher)
 
   const user = data?.user
   const finished = Boolean(data)
@@ -18,6 +22,7 @@ export const useUser = ({ redirectTo, redirectIfFound } = {}) => {
 
   useEffect(() => {
     if (!redirectTo || !finished) return
+
     if (
       // If redirectTo is set, redirect if the user was not found.
       (redirectTo && !redirectIfFound && !hasUser) ||

@@ -1,5 +1,4 @@
 import { getLoginSession } from '../../../lib/auth'
-// import { findUser } from '../../lib/user'
 import { findUser } from '../../../lib/user'
 
 export default async function user(req, res) {

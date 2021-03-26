@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next'
 import 'normalize.css'
 import React from 'react'
-import Header from '../components/Header'
+import Layout from '../components/Layout'
 import Post, { PostProps } from '../components/Post'
 import { useUser } from '../lib/hooks'
 
@@ -15,19 +15,15 @@ const Index: React.FC<Props> = (props) => {
   const { posts } = props
   const user = useUser()
 
-  console.log(user, 'user')
-
   if (!posts) return <div>Loading...</div>
 
   return (
-    <>
-      <Header />
-
+    <Layout>
       <aside>
         {user && (
           <>
             <p>Currently logged in as:</p>
-            <pre>{JSON.stringify(user, null, 2)}</pre>
+            <pre>{JSON.stringify(user.username, null, 2)}</pre>
           </>
         )}
       </aside>
@@ -55,7 +51,7 @@ const Index: React.FC<Props> = (props) => {
           }
         `}</style>
       </main>
-    </>
+    </Layout>
   )
 }
 

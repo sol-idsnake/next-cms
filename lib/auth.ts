@@ -1,9 +1,11 @@
 import Iron from '@hapi/iron'
+import { NextApiResponse } from 'next'
 import { MAX_AGE, setTokenCookie, getTokenCookie } from './auth-cookies'
+import { User } from '../node_modules/.prisma/client'
 
 const { TOKEN_SECRET } = process.env
 
-export const setLoginSession = async (res, session) => {
+export const setLoginSession = async (res: NextApiResponse, session: User) => {
   const createdAt = Date.now()
   // Create a session object with a max age that we can validate later
   const obj = { ...session, createdAt, maxAge: MAX_AGE }
@@ -12,10 +14,10 @@ export const setLoginSession = async (res, session) => {
   setTokenCookie(res, token)
 }
 
-export const getLoginSession = async (req): Promise<any> => {
+export const getLoginSession = async (req): Promise<{} | User> => {
   const token = getTokenCookie(req)
 
-  if (!token) return
+  if (!token) return {}
 
   const session = await Iron.unseal(token, TOKEN_SECRET, Iron.defaults)
   const expiresAt = session.createdAt + session.maxAge * 1000
