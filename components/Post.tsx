@@ -10,7 +10,7 @@ export type PostProps = {
   userId: string
 }
 
-const Post: React.FC<{ post: PostProps }> = ({ post }) => {
+const Post = ({ post }: { post: PostProps }) => {
   const slug = post.title.toLowerCase().replace(/\s/g, '-')
 
   return (

@@ -1,19 +1,20 @@
 import Link from 'next/link'
+import React from 'react'
 
 const Form = ({ isLogin, errorMessage, onSubmit }) => (
   <form onSubmit={onSubmit}>
-    <label>
+    <label htmlFor="username">
       <span>Username</span>
-      <input type="text" name="username" required />
+      <input type="text" name="username" id="username" required />
     </label>
-    <label>
+    <label htmlFor="password">
       <span>Password</span>
-      <input type="password" name="password" required />
+      <input type="password" name="password" id="password" required />
     </label>
     {!isLogin && (
-      <label>
+      <label htmlFor="rpassword">
         <span>Repeat password</span>
-        <input type="password" name="rpassword" required />
+        <input type="password" name="rpassword" id="rpassword" required />
       </label>
     )}
 
@@ -47,26 +48,25 @@ const Form = ({ isLogin, errorMessage, onSubmit }) => (
         font-weight: 600;
       }
       input {
-        padding: 8px;
-        margin: 0.3rem 0 1rem;
-        border: 1px solid #ccc;
         border-radius: 4px;
+        border: 1px solid #ccc;
+        margin: 0.3rem 0 1rem;
+        padding: 8px;
       }
       .submit {
-        display: flex;
-        justify-content: flex-end;
         align-items: center;
+        display: flex;
         justify-content: space-between;
       }
       .submit > a {
         text-decoration: none;
       }
       .submit > button {
-        padding: 0.5rem 1rem;
-        cursor: pointer;
         background: #fff;
-        border: 1px solid #ccc;
         border-radius: 4px;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        padding: 0.5rem 1rem;
       }
       .submit > button:hover {
         border-color: #888;

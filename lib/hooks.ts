@@ -1,19 +1,19 @@
 import { useEffect } from 'react'
 import Router from 'next/router'
 import useSWR from 'swr'
-import { User } from '../node_modules/.prisma/client'
+import { User } from '.prisma/client'
 
-const fetcher = (url) =>
+const fetcher = (url: string) =>
   fetch(url)
     .then((res) => res.json())
-    .then((data) => {
-      return { user: data?.user || null }
-    })
+    .then((data) => ({ user: data?.currentUser || null }))
 
-export const useUser = ({
-  redirectTo,
-  redirectIfFound,
-}: { redirectTo?: string; redirectIfFound?: boolean } = {}): null | User => {
+type HookProps = {
+  redirectIfFound?: boolean
+  redirectTo?: string
+}
+
+const useUser = ({ redirectTo, redirectIfFound }: HookProps = {}): User | null => {
   const { data, error } = useSWR('/api/user/user', fetcher)
 
   const user = data?.user

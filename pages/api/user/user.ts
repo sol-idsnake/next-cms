@@ -1,14 +1,16 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import { getLoginSession } from '../../../lib/auth'
-import { findUser } from '../../../lib/user'
+import { findUser, User } from '../../../lib/user'
 
-export default async function user(req, res) {
+const user = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const session = await getLoginSession(req)
-    const user = (session && (await findUser(session))) ?? null
+    const currentUser = (session && (await findUser(session as User))) ?? null
 
-    res.status(200).json({ user })
+    res.status(200).json({ currentUser })
   } catch (error) {
-    console.error(error)
     res.status(500).end('Authentication token is invalid, please log in')
   }
 }
+
+export default user

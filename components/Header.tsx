@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { useUser } from '../lib/hooks'
+import useUser from '../lib/hooks'
 
 const Header = () => {
   const user = useUser()
@@ -21,7 +21,7 @@ const Header = () => {
                 </Link>
               </li>
               <li>
-                <a href="/api/logout">Logout</a>
+                <a href="/api/user/logout">Logout</a>
               </li>
             </>
           ) : (

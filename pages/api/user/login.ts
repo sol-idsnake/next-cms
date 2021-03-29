@@ -3,6 +3,7 @@ import nextConnect from 'next-connect'
 import passport from 'passport'
 import { setLoginSession } from '../../../lib/auth'
 import localStrategy from '../../../lib/password-local'
+import { User } from '.prisma/client'
 
 const authenticate = (method: string, req: NextApiRequest, res: NextApiResponse) =>
   new Promise((resolve, reject) => {
@@ -22,14 +23,13 @@ export default nextConnect()
   .post(async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const user = await authenticate('local', req, res)
-      // session is the payload to save in the token, it may contain basic info about the user
-      const session = { ...user }
+      // session is the payload to save in the token, it contains basic info about the user
+      const session = { ...(user as User) }
 
       await setLoginSession(res, session)
 
       res.status(200).send({ done: true })
     } catch (error) {
-      console.error(error)
       res.status(401).send(error.message)
     }
   })

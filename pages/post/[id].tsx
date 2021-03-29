@@ -5,7 +5,6 @@ import 'normalize.css'
 
 const Post: React.FC<PostProps> = (props) => {
   const post = props
-  console.log(post, 'props from pages post')
 
   return (
     <section>

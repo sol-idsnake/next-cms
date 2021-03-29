@@ -8,15 +8,15 @@ const handle = (req: NextApiRequest, res: NextApiResponse) => {
 }
 
 // GET /api/post/:id
-async function handleGET(postId, res) {
+async function handleGET(postId, res: NextApiResponse) {
   try {
     const post = await prisma.post.findUnique({
-      where: { id: String(postId) },
+      where: { id: postId },
     })
 
     res.json(post)
   } catch (error) {
-    throw new Error(`\n\n\npages/api/[id], ${error}\n\n\n`)
+    throw new Error(error)
   }
 }
 
