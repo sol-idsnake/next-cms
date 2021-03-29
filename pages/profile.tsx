@@ -1,6 +1,6 @@
 import { format } from 'date-fns'
 import Router from 'next/router'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { User } from '.prisma/client'
 import Layout from '../components/Layout'
 import useUser from '../lib/hooks'
@@ -20,7 +20,7 @@ const Profile = () => {
     }
   }, [user])
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     if (errorMsg) setErrorMsg('')

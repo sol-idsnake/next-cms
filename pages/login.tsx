@@ -9,7 +9,7 @@ const Login = () => {
 
   const [errorMsg, setErrorMsg] = useState('')
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     if (errorMsg) setErrorMsg('')

@@ -10,7 +10,7 @@ type Props = {
   posts: PostProps[]
 }
 
-const Index: React.FC<Props> = (props) => {
+const Index = (props: Props) => {
   const { posts } = props
   const user = useUser()
 

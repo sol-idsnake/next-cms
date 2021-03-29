@@ -11,7 +11,13 @@ export type User = {
   updatedAt: Date
 }
 
-export const createUser = async ({ username, password }) => {
+export const createUser = async ({
+  username,
+  password,
+}: {
+  username: string
+  password: string
+}) => {
   const salt = crypto.randomBytes(16).toString('hex')
   const hash = crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex')
 

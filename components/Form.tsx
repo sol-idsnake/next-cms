@@ -1,7 +1,15 @@
 import Link from 'next/link'
 import React from 'react'
 
-const Form = ({ isLogin, errorMessage, onSubmit }) => (
+const Form = ({
+  isLogin,
+  errorMessage,
+  onSubmit,
+}: {
+  isLogin: boolean
+  errorMessage: string
+  onSubmit: React.FormEventHandler<HTMLFormElement>
+}) => (
   <form onSubmit={onSubmit}>
     <label htmlFor="username">
       <span>Username</span>

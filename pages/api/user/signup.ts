@@ -1,6 +1,7 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import { createUser } from '../../../lib/user'
 
-const signup = async (req, res) => {
+const signup = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     await createUser(req.body)
 
