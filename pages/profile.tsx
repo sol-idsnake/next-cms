@@ -8,7 +8,11 @@ import useUser from '../lib/hooks'
 const Profile = () => {
   const [email, setEmail] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
+
   const user: User = useUser()
+  const emailConfirmed = user?.emailConfirmed
+
+  // console.log(emailConfirmed, 'user')
 
   useEffect(() => {
     if (user === null) {
@@ -47,8 +51,6 @@ const Profile = () => {
     }
   }
 
-  //   console.log(!!Object.keys(user).length == true, 'user')
-
   const memberSince = (user && format(new Date(user.createdAt), 'MMM, yyyy')) || 'n/a'
 
   return (
@@ -62,21 +64,22 @@ const Profile = () => {
             <p>Member since: {memberSince}</p>
           </div>
           <form onSubmit={handleSubmit}>
-            <label htmlFor="email">
-              <span>Email</span>
-              <input
-                id="email"
-                name="email"
-                placeholder="What's your email?"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.currentTarget.value)}
-              />
+            <label htmlFor="email" className="email">
+              Email
             </label>
+            {!emailConfirmed && <span className="notConfirmed">Email not verified</span>}
+            <input
+              id="email"
+              name="email"
+              onChange={(e) => setEmail(e.currentTarget.value)}
+              placeholder="What's your email?"
+              type="email"
+              value={email}
+            />
 
-            <div className="submit">
+            <section className="submit">
               <button type="submit">Save</button>
-            </div>
+            </section>
 
             {errorMsg && <p className="error">{errorMsg}</p>}
           </form>
@@ -88,14 +91,23 @@ const Profile = () => {
           justify-content: space-between;
           margin-bottom: 3em;
         }
-        form,
-        label {
-          display: flex;
-          flex-flow: column;
+        span {
+          border: 1px solid #ab3f3f;
+          border-radius: 5px;
+          color: #ab3f3f;
+          font-size: 12px;
+          padding: 0.1em 0.5em 0.2em;
+          text-align: right;
         }
         form {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: flex-end;
           margin: 0 auto;
           max-width: 20rem;
+        }
+        label {
+          flex: 1;
         }
         label > span {
           font-weight: 600;
@@ -103,7 +115,8 @@ const Profile = () => {
         input {
           border-radius: 4px;
           border: 1px solid #ccc;
-          margin: 0.3rem 0 1rem;
+          flex: 1 0 100%;
+          margin: 0.5rem 0 1rem;
           padding: 8px;
         }
         .submit {

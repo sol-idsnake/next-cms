@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getLoginSession } from '../../../lib/auth'
-import { updateUser, User } from '../../../lib/user'
+import { updateUser } from '../../../lib/user'
+import { User } from '.prisma/client'
 
 const update = async (req: NextApiRequest, res: NextApiResponse) => {
   try {

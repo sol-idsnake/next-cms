@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
+import { User } from '.prisma/client'
 import { getLoginSession } from '../../../lib/auth'
-import { findUser, User } from '../../../lib/user'
+import { findUser } from '../../../lib/user'
 
 const user = async (req: NextApiRequest, res: NextApiResponse) => {
   try {

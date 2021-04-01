@@ -36,6 +36,12 @@ module.exports = {
     'react/prop-types': 0,
     'jsx-a11y/anchor-is-valid': 0,
     'react/react-in-jsx-scope': 0,
+    'jsx-a11y/label-has-associated-control': [
+      2,
+      {
+        labelComponents: ['label'],
+      },
+    ],
   },
   settings: {
     'import/resolver': {

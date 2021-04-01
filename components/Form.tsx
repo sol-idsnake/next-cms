@@ -15,6 +15,12 @@ const Form = ({
       <span>Username</span>
       <input type="text" name="username" id="username" required />
     </label>
+    {!isLogin && (
+      <label htmlFor="email">
+        <span>Email</span>
+        <input type="email" name="email" id="email" required />
+      </label>
+    )}
     <label htmlFor="password">
       <span>Password</span>
       <input type="password" name="password" id="password" required />

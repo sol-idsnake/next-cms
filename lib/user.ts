@@ -1,31 +1,26 @@
 import crypto from 'crypto'
+import { NextApiRequest } from 'next'
 import prisma from '../prisma'
-
-export type User = {
-  id: string
-  username: string
-  hash: string
-  salt: string
-  email: string | null
-  createdAt: Date
-  updatedAt: Date
-}
+import { User } from '.prisma/client'
 
 export const createUser = async ({
   username,
   password,
+  email,
 }: {
   username: string
   password: string
+  email: string
 }) => {
   const salt = crypto.randomBytes(16).toString('hex')
   const hash = crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex')
 
   const newUser: User = await prisma.user.create({
     data: {
-      username,
+      email,
       hash,
       salt,
+      username,
     },
   })
 
@@ -40,28 +35,32 @@ export const findUser = async (session: User) => {
   return user
 }
 
-export const updateUser = async (session: User, update: User) => {
-  const { id, email } = session
+export const updateUser = async (req: NextApiRequest) => {
+  if (req.query.email && req.query.token) {
+    const { email } = req.query
 
-  // Is it safe to update via ...update or better to update property by property to not allow for malicious hash/salt update?
-  if (email !== update.email) {
-    const emailUpdate = await prisma.user.update({
-      where: { id },
+    const emailConfirmation = prisma.user.update({
+      where: { email },
       data: {
-        email: update.email,
+        emailConfirmed: true,
+        emailToken: '',
       },
     })
 
-    return emailUpdate
+    return emailConfirmation
   }
 
+  // Is it safe to update via ...update or better to update property by property to not allow for malicious hash/salt update?
+  // if (email !== payload.email) {
+  //   const emailUpdate = await prisma.user.update({
+  //     where: { id },
+  //     data: {
+  //       email: payload.email,
+  //     },
+  //   })
+
+  //   return emailUpdate
+  // }
+
   return 'Update failed'
-}
-
-// Compare the password of an already fetched user (using `findUser`) and compare the
-// password for a potential match
-export const validatePassword = (user: User, inputPassword: string) => {
-  const inputHash = crypto.pbkdf2Sync(inputPassword, user.salt, 1000, 64, 'sha512').toString('hex')
-
-  return user.hash === inputHash
 }
