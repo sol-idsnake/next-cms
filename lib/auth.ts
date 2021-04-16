@@ -6,10 +6,10 @@ import { User } from '.prisma/client'
 const { TOKEN_SECRET } = process.env
 
 export const setLoginSession = async (res: NextApiResponse, session: User) => {
-  const createdAt = Date.now()
+  const cookieCreatedAt = Date.now()
 
   // Create a session object with a max age that we can validate later
-  const obj = { ...session, createdAt, maxAge: MAX_AGE }
+  const obj = { ...session, cookieCreatedAt, maxAge: MAX_AGE }
   const token = await Iron.seal(obj, TOKEN_SECRET, Iron.defaults)
 
   setTokenCookie(res, token)
