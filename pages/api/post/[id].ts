@@ -16,7 +16,7 @@ async function handleGET(postId, res: NextApiResponse) {
 
     res.json(post)
   } catch (error) {
-    throw new Error(error)
+    throw new Error(error.message)
   }
 }
 

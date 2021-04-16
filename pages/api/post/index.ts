@@ -7,7 +7,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     res.json(posts)
   } catch (error) {
-    throw new Error(error)
+    throw new Error(error.message)
   }
 }
 
